@@ -2,10 +2,21 @@ import requests
 import streamlit as st
 from streamlit_lottie import st_lottie
 from PIL import Image
+from pathlib import Path
 
+# --- PATH SETTINGS ---
+current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
+profile_pic = current_dir / "assets" / "profile-pic.png"
+
+# --- GENERAL SETTINGS ---
+NAME = "Shawn Oliver"
+DESCRIPTION = """
+Senior Business Analyst
+"""
+EMAIL = "shawn@shawnoliver.ca"
 
 # Find more emojis here: https://www.webfx.com/tools/emoji-cheat-sheet/
-st.set_page_config(page_title="Shawn Oliver", page_icon=":tada:", layout="wide")
+st.set_page_config(page_title="Shawn Oliver", page_icon=":wave:", layout="wide")
 
 
 def load_lottieurl(url):
@@ -19,12 +30,16 @@ def load_lottieurl(url):
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
+profile_pic = Image.open(profile_pic)
 
 local_css("style/style.css")
 
 # ---- LOAD ASSETS ----
 lottie_coding = load_lottieurl("https://assets8.lottiefiles.com/packages/lf20_cmaqoazd.json")
+
+# --- HERO SECTION ---
+with st.container():
+    st.image(profile_pic, width=230)
 
 # ---- HEADER SECTION ----
 with st.container():
@@ -41,7 +56,6 @@ with st.container():
     st.write("---")
     left_column, right_column = st.columns(2)
     with left_column:
-        st.write("##")
         st.write(
             """
             What I've accomplished and what I like to do:
@@ -52,9 +66,10 @@ with st.container():
             - Is a Chartered Investment Manager (CIM) and holds a Bachelor of Commerce (Finance w/ distinction) from the John Molson School of Business at Concordia University
             - Has completed the Software Product Management Specialization at the University of Alberta
             - Dabbles in macroeconomics, computer networking, crypto and likes to ride bikes in the Summer and snowboards in the Winter
+            - Bilingue anglais et français
             """
         )
-        st.write("[LinkedIn >](https://www.linkedin.com/in/shawnoliver85/)")
+        st.write("[Vist my LinkedIn](https://www.linkedin.com/in/shawnoliver85/)")
     with right_column:
         st_lottie(lottie_coding, height=300, key="coding")
 
@@ -63,6 +78,8 @@ with st.container():
     st.write("---")
     st.header("Get In Touch With Me!")
     st.write("##")
+    st.write("📫", EMAIL)
+    st.write("Or use the form below:")
 
     # Documention: https://formsubmit.co/ !!! CHANGE EMAIL ADDRESS !!!
     contact_form = """
